@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">Kahve Sözlüğü</string>
     <string name="title_activity_about">Hakkında</string>
-    <string name="nav_home">Sözlük</string>
+    <string name="menu_search_view_title">Ara</string>
 
+    <string name="nav_home">Sözlük</string>
+    <string name="nav_subtitle_cat_title">Kategoriler</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="menu_search_view_title">Ara</string>
+
+
 </resources>

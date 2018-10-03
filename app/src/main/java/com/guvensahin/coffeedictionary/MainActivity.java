@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -30,12 +32,20 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ListView lv;
     EntryAdapter adapter;
     ArrayList<Entry> entries = new ArrayList<Entry>();
+    ArrayList<String> categories = new ArrayList<String>();
+
+    NavigationView navigationView;
+
+    String filterName = "";
+    String filterCategory = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +61,15 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // ilk menüyü otomatik seçili hale getir
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         readEntriesFromFile();
         initListView();
+        updateNavMenuForFilters();
     }
 
     @Override
@@ -77,11 +91,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            filterCategory = "";
+            setTitle(R.string.app_name);
+            refreshListForFilter();
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
         }
+        // kategori filtreleri
+        else
+        {
+            filterCategory = item.getTitle().toString();
+            setTitle(filterCategory);
+            refreshListForFilter();
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -104,7 +128,8 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onQueryTextChange(String queryText) {
-                adapter.filter(queryText);
+                filterName = queryText;
+                refreshListForFilter();
                 return false;
             }
         });
@@ -129,11 +154,19 @@ public class MainActivity extends AppCompatActivity
             for (String[] row : rows) {
 
                 Entry entry         = new Entry();
-                entry.name          = row[0];
-                entry.description   = row[1];
-                entry.category      = row[2];
+                entry.setNameEng(row[0].trim());
+                entry.setNameTur(row[1].trim());
+                entry.category      = row[2].trim();
+                entry.description   = row[3].trim();
 
                 entries.add(entry);
+
+                // kategoriler kaydedilir
+                if (!TextUtils.isEmpty(entry.category)
+                    && !categories.contains(entry.category))
+                {
+                    categories.add(entry.category);
+                }
             }
         }
         catch (IOException e) {
@@ -157,5 +190,27 @@ public class MainActivity extends AppCompatActivity
                                       }
                                   }
         );
+    }
+
+    private void updateNavMenuForFilters()
+    {
+        Menu menu = navigationView.getMenu();
+        SubMenu subMenu = menu.findItem(R.id.nav_subtitle_cat).getSubMenu();
+        MenuItem menuItem;
+
+        int counter = 0;
+
+        for (String cat : categories)
+        {
+            counter++;
+            menuItem = subMenu.add(Menu.NONE, counter, Menu.NONE, cat);
+            menuItem.setIcon(R.drawable.ic_folder_open);
+            menuItem.setCheckable(true);
+        }
+    }
+
+    private void refreshListForFilter()
+    {
+        adapter.filter(filterName, filterCategory);
     }
 }
