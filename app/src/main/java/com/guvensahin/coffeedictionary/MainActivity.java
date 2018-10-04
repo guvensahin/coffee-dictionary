@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static android.webkit.ConsoleMessage.MessageLevel.LOG;
@@ -199,6 +200,9 @@ public class MainActivity extends AppCompatActivity
         MenuItem menuItem;
 
         int counter = 0;
+
+        // todo türkçe karakter desteklemiyor
+        Collections.sort(categories);
 
         for (String cat : categories)
         {
