@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         for (Category category : categories)
         {
             menuItem = subMenu.add(Menu.NONE, category.getId(), Menu.NONE, category.getName());
-            menuItem.setIcon(R.drawable.ic_folder_open);
+            menuItem.setIcon(R.drawable.ic_nav_cat);
             menuItem.setCheckable(true);
         }
     }
