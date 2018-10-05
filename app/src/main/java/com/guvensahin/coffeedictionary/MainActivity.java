@@ -35,18 +35,18 @@ import java.util.List;
 
 import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ListView lv;
-    EntryAdapter adapter;
-    ArrayList<Entry> entries = new ArrayList<Entry>();
-    ArrayList<String> categories = new ArrayList<String>();
-
     NavigationView navigationView;
 
-    String filterName = "";
-    String filterCategory = "";
+    DatabaseHelper db;
+    EntryAdapter adapter;
+    ArrayList<Entry> entries = new ArrayList<Entry>();
+    ArrayList<Category> categories = new ArrayList<Category>();
+
+    String filterName = null;
+    Integer filterCategoryId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +68,11 @@ public class MainActivity extends AppCompatActivity
         // ilk menüyü otomatik seçili hale getir
         navigationView.getMenu().getItem(0).setChecked(true);
 
-        readEntriesFromFile();
+        // db init
+        db = new DatabaseHelper(this);
+
         initListView();
-        updateNavMenuForFilters();
+        updateNavMenu();
     }
 
     @Override
@@ -92,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            filterCategory = "";
+            filterCategoryId = null;
             setTitle(R.string.app_name);
             refreshListForFilter();
         } else if (id == R.id.nav_about) {
@@ -102,11 +104,10 @@ public class MainActivity extends AppCompatActivity
         // kategori filtreleri
         else
         {
-            filterCategory = item.getTitle().toString();
-            setTitle(filterCategory);
+            filterCategoryId = id;
+            setTitle(db.getCategory(id).getName());
             refreshListForFilter();
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -138,45 +139,10 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-    // read list data
-    private void readEntriesFromFile()
-    {
-        try {
-            CSVReader reader = new CSVReaderBuilder(new InputStreamReader(getAssets().open("data.csv")))
-                    .withCSVParser(new CSVParserBuilder().withSeparator(';').build())
-                    .build();
-
-            List<String[]> rows = reader.readAll();
-
-            // delete first line for header
-            rows.remove(0);
-
-            for (String[] row : rows) {
-
-                Entry entry         = new Entry();
-                entry.setNameEng(row[0].trim());
-                entry.setNameTur(row[1].trim());
-                entry.category      = row[2].trim();
-                entry.description   = row[3].trim();
-
-                entries.add(entry);
-
-                // kategoriler kaydedilir
-                if (!TextUtils.isEmpty(entry.category)
-                    && !categories.contains(entry.category))
-                {
-                    categories.add(entry.category);
-                }
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void initListView()
     {
+        entries = db.getEntries();
+
         lv = (ListView) findViewById(R.id.list_view_entry);
         adapter = new EntryAdapter(this, R.layout.list_view_entry, entries);
         lv.setAdapter(adapter);
@@ -193,21 +159,17 @@ public class MainActivity extends AppCompatActivity
         );
     }
 
-    private void updateNavMenuForFilters()
+    private void updateNavMenu()
     {
+        categories = db.getCategories();
+
         Menu menu = navigationView.getMenu();
         SubMenu subMenu = menu.findItem(R.id.nav_subtitle_cat).getSubMenu();
         MenuItem menuItem;
 
-        int counter = 0;
-
-        // todo türkçe karakter desteklemiyor
-        Collections.sort(categories);
-
-        for (String cat : categories)
+        for (Category category : categories)
         {
-            counter++;
-            menuItem = subMenu.add(Menu.NONE, counter, Menu.NONE, cat);
+            menuItem = subMenu.add(Menu.NONE, category.getId(), Menu.NONE, category.getName());
             menuItem.setIcon(R.drawable.ic_folder_open);
             menuItem.setCheckable(true);
         }
@@ -215,6 +177,8 @@ public class MainActivity extends AppCompatActivity
 
     private void refreshListForFilter()
     {
-        adapter.filter(filterName, filterCategory);
+        entries.clear();
+        entries.addAll(db.getEntries(filterCategoryId, filterName));
+        adapter.notifyDataSetChanged();
     }
 }

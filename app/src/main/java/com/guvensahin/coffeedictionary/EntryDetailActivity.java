@@ -1,6 +1,7 @@
 package com.guvensahin.coffeedictionary;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 public class EntryDetailActivity extends AppCompatActivity {
 
     public Entry entry;
+    private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +34,17 @@ public class EntryDetailActivity extends AppCompatActivity {
         TextView catView = (TextView) findViewById(R.id.cat_view);
         TextView descView = (TextView) findViewById(R.id.desc_view);
 
+        // db init
+        db = new DatabaseHelper(this);
+
         // intent
         Intent intent = getIntent();
         entry = (Entry)intent.getSerializableExtra("entryModel");
 
         nameEngView.setText(entry.getNameEng());
         nameTurView.setText(entry.getNameTur());
-        catView.setText(entry.category);
-        descView.setText(entry.description);
-
-        //nameTurView.setVisibility(entry.getNameEng().equals(entry.getNameTur()) ? View.INVISIBLE : View.VISIBLE);
+        catView.setText(db.getCategory(entry.getCategoryId()).getName());
+        descView.setText(entry.getDescription());
     }
 
     @Override
