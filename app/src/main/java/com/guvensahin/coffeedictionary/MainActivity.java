@@ -3,10 +3,7 @@ package com.guvensahin.coffeedictionary;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,18 +17,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
@@ -40,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ListView lv;
     NavigationView navigationView;
 
+    private AdView mAdView;
     DatabaseHelper db;
     EntryAdapter adapter;
     ArrayList<Entry> entries = new ArrayList<Entry>();
@@ -73,6 +65,71 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initListView();
         updateNavMenu();
+
+        // ads
+        MobileAds.initialize(this, getString(R.string.admob_id));
+
+        mAdView = (AdView) findViewById(R.id.ad_view);
+        //mAdView.setAdSize(AdSize.SMART_BANNER);
+        //mAdView.setAdUnitId(getString(R.string.admob_list_bottom));
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                // Check the LogCat to get your test device ID
+                //.addTestDevice("C04B1BFFB0774708339BC273F8A43708")
+                .build();
+
+        /*mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+            }
+
+            @Override
+            public void onAdClosed() {
+                Toast.makeText(getApplicationContext(), "Ad is closed!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                Toast.makeText(getApplicationContext(), "Ad failed to load! error code: " + errorCode, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                Toast.makeText(getApplicationContext(), "Ad left application!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+            }
+        });*/
+
+        mAdView.loadAd(adRequest);
+    }
+
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     @Override
