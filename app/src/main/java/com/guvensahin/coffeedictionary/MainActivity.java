@@ -1,6 +1,7 @@
 package com.guvensahin.coffeedictionary;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -15,23 +16,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import java.util.ArrayList;
-
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ListView lv;
     NavigationView navigationView;
 
-    private AdView mAdView;
+    private AdView adView;
     DatabaseHelper db;
     EntryAdapter adapter;
     ArrayList<Entry> entries = new ArrayList<Entry>();
@@ -67,11 +63,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         updateNavMenu();
 
         // ads
-        MobileAds.initialize(this, getString(R.string.admob_id));
+        MobileAds.initialize(this, AppHelper.getProperty(this, "ADMOB_ID"));
 
-        mAdView = (AdView) findViewById(R.id.ad_view);
-        //mAdView.setAdSize(AdSize.SMART_BANNER);
-        //mAdView.setAdUnitId(getString(R.string.admob_list_bottom));
+        adView = (AdView) findViewById(R.id.ad_view);
 
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -79,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //.addTestDevice("C04B1BFFB0774708339BC273F8A43708")
                 .build();
 
-        /*mAdView.setAdListener(new AdListener() {
+        /*adView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
             }
@@ -105,13 +99,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });*/
 
-        mAdView.loadAd(adRequest);
+        adView.loadAd(adRequest);
     }
 
     @Override
     public void onPause() {
-        if (mAdView != null) {
-            mAdView.pause();
+        if (adView != null) {
+            adView.pause();
         }
         super.onPause();
     }
@@ -119,15 +113,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onResume() {
         super.onResume();
-        if (mAdView != null) {
-            mAdView.resume();
+        if (adView != null) {
+            adView.resume();
         }
     }
 
     @Override
     public void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
+        if (adView != null) {
+            adView.destroy();
         }
         super.onDestroy();
     }

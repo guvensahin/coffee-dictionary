@@ -35,7 +35,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:adSize="SMART_BANNER"
-        app:adUnitId="@string/admob_list_bottom"/>
+        app:adUnitId="@string/ADMOB_BANNER_ID"/>
 
 
 </android.support.constraint.ConstraintLayout>

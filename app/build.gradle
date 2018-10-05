@@ -11,9 +11,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            resValue "string", "ADMOB_BANNER_ID", getProps("ADMOB_BANNER_ID")
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            resValue "string", "ADMOB_BANNER_ID", getProps("ADMOB_BANNER_ID")
         }
     }
 }
@@ -31,4 +37,15 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.8'
     compile 'com.github.medyo:android-about-page:1.2.4'
     implementation 'com.google.android.gms:play-services-ads:16.0.0'
+}
+
+def getProps(String propName) {
+    def propsFile = rootProject.file('\\app\\src\\main\\assets\\config.properties')
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        return props[propName]
+    } else {
+        return "";
+    }
 }
