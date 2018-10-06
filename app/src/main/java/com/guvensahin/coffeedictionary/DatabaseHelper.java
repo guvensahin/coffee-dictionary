@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "coffee_dictionary_db";
     private Context context;
 
@@ -141,7 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Category> list = new ArrayList<Category>();
 
         // query
-        String selectQuery = "SELECT  * FROM " + Category.TABLE_NAME;
+        String selectQuery = "SELECT  * FROM " + Category.TABLE_NAME + " ORDER BY " + Category.COLUMN_NAME;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -224,7 +224,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Entry> list = new ArrayList<Entry>();
 
         // query
-        String selectQuery = "SELECT  * FROM " + Entry.TABLE_NAME;
+        String selectQuery = "SELECT  * FROM " + Entry.TABLE_NAME + " ORDER BY " + Entry.COLUMN_NAMEENG + " ASC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -277,6 +277,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + Entry.COLUMN_NAMETUR + " LIKE '%" + name + "%')";
         }
 
+        // order by
+        selectQuery += " ORDER BY " + Entry.COLUMN_NAMEENG + " ASC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
