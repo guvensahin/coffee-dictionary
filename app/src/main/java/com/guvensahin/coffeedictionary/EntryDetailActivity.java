@@ -10,10 +10,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 public class EntryDetailActivity extends AppCompatActivity {
 
     public Entry entry;
     private DatabaseHelper db;
+
+    private AdView adView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +52,51 @@ public class EntryDetailActivity extends AppCompatActivity {
         nameTurView.setText(entry.getNameTur());
         catView.setText(db.getCategory(entry.getCategoryId()).getName());
         descView.setText(entry.getDescription());
+
+        // ads
+        initAds();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onPause() {
+        if (adView != null) {
+            adView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adView != null) {
+            adView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
+
+    private void initAds()
+    {
+        MobileAds.initialize(this, AppHelper.getProperty(this, "ADMOB_ID"));
+
+        adView = (AdView) findViewById(R.id.entry_detail_ad_view);
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        adView.loadAd(adRequest);
     }
 }
