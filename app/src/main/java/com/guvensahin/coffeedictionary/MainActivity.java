@@ -1,9 +1,11 @@
 package com.guvensahin.coffeedictionary;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.SubMenu;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -24,82 +27,37 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ListView lv;
-    NavigationView navigationView;
-
+    private ListView lv;
+    private NavigationView navigationView;
+    private SearchView searchView;
     private AdView adView;
-    DatabaseHelper db;
-    EntryAdapter adapter;
-    ArrayList<Entry> entries = new ArrayList<Entry>();
-    ArrayList<Category> categories = new ArrayList<Category>();
 
-    String filterName = null;
-    Integer filterCategoryId = null;
+    private DatabaseHelper db;
+    private EntryAdapter adapter;
+    private ArrayList<Entry> entries = new ArrayList<Entry>();
+    private ArrayList<Category> categories = new ArrayList<Category>();
+
+    private Integer filterCategoryId = null;
+    private String filterName = null;
+    private Boolean refreshFilterName = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        // ilk menüyü otomatik seçili hale getir
-        navigationView.getMenu().getItem(0).setChecked(true);
-
         // db init
         db = new DatabaseHelper(this);
 
+        // navigation drawer
+        initNavMenu();
+
+        // content
         initListView();
-        updateNavMenu();
 
         // ads
-        MobileAds.initialize(this, AppHelper.getProperty(this, "ADMOB_ID"));
-
-        adView = (AdView) findViewById(R.id.ad_view);
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                // Check the LogCat to get your test device ID
-                //.addTestDevice("C04B1BFFB0774708339BC273F8A43708")
-                .build();
-
-        /*adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-            }
-
-            @Override
-            public void onAdClosed() {
-                Toast.makeText(getApplicationContext(), "Ad is closed!", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                Toast.makeText(getApplicationContext(), "Ad failed to load! error code: " + errorCode, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                Toast.makeText(getApplicationContext(), "Ad left application!", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-        });*/
-
-        adView.loadAd(adRequest);
+        initAds();
     }
 
     @Override
@@ -131,12 +89,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else if (filterCategoryId != null) {
+            // anasayfaya geç
+            this.onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_home));
+        }
+        else {
             super.onBackPressed();
         }
     }
-
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -144,8 +105,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        // onNavigationItemSelected method'u activity içinden manuel tetiklendiği için bu satır eklendi.
+        item.setChecked(true);
+
         if (id == R.id.nav_home) {
             filterCategoryId = null;
+            clearFilterName();
             setTitle(R.string.app_name);
             refreshListForFilter();
         } else if (id == R.id.nav_about) {
@@ -156,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else
         {
             filterCategoryId = id;
+            clearFilterName();
             setTitle(db.getCategory(id).getName());
             refreshListForFilter();
         }
@@ -165,14 +131,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu( Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_search, menu);
 
         MenuItem myActionMenuItem = menu.findItem(R.id.menu_search_view);
-        SearchView searchView = (SearchView) myActionMenuItem.getActionView();
+        searchView = (SearchView) myActionMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -180,13 +144,75 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             @Override
-            public boolean onQueryTextChange(String queryText) {
-                filterName = queryText;
-                refreshListForFilter();
+            public boolean onQueryTextChange(String query) {
+                filterName = query;
+
+                if (refreshFilterName) {
+                    Log.d("güven", "onQueryTextChange");
+                    refreshListForFilter();
+                }
                 return false;
             }
         });
         return true;
+    }
+
+
+
+    private void initNavMenu()
+    {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        {
+            // drawer menu açıldığında, klavye açık ise kapatılır
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                InputMethodManager inputMethodManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                InputMethodManager inputMethodManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            }
+        };
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        // anasayfa menüsünü seçili hale getir
+        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+
+        // kategori filtreleri yüklenir
+        createNavMenuCategory();
+    }
+
+    private void createNavMenuCategory()
+    {
+        categories = db.getCategories();
+
+        Menu menu = navigationView.getMenu();
+        SubMenu subMenu = menu.findItem(R.id.nav_subtitle_cat).getSubMenu();
+        MenuItem menuItem;
+
+        for (Category category : categories)
+        {
+            menuItem = subMenu.add(Menu.NONE, category.getId(), Menu.NONE, category.getName());
+            menuItem.setIcon(R.drawable.ic_nav_cat);
+            menuItem.setCheckable(true);
+        }
     }
 
 
@@ -210,26 +236,69 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         );
     }
 
-    private void updateNavMenu()
+    private void initAds()
     {
-        categories = db.getCategories();
+        MobileAds.initialize(this, AppHelper.getProperty(this, "ADMOB_ID"));
 
-        Menu menu = navigationView.getMenu();
-        SubMenu subMenu = menu.findItem(R.id.nav_subtitle_cat).getSubMenu();
-        MenuItem menuItem;
+        adView = (AdView) findViewById(R.id.ad_view);
 
-        for (Category category : categories)
-        {
-            menuItem = subMenu.add(Menu.NONE, category.getId(), Menu.NONE, category.getName());
-            menuItem.setIcon(R.drawable.ic_nav_cat);
-            menuItem.setCheckable(true);
-        }
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                //.addTestDevice("C04B1BFFB0774708339BC273F8A43708") // Check the LogCat to get your test device ID
+                .build();
+
+        /*adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+            }
+
+            @Override
+            public void onAdClosed() {
+                Toast.makeText(getApplicationContext(), "Ad is closed!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                Toast.makeText(getApplicationContext(), "Ad failed to load! error code: " + errorCode, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                Toast.makeText(getApplicationContext(), "Ad left application!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+            }
+        });*/
+
+        adView.loadAd(adRequest);
     }
+
+
 
     private void refreshListForFilter()
     {
+        Log.d("güven", "refreshListForFilter");
         entries.clear();
         entries.addAll(db.getEntries(filterCategoryId, filterName));
         adapter.notifyDataSetChanged();
+    }
+
+    private void clearFilterName()
+    {
+        if (!TextUtils.isEmpty(filterName)) {
+
+            // bu işlemden sonra zaten kategoride sıfırlanıp refresh edilecek.
+            // 2 defa sql'e gitmemesi için listener içindeki yenileme kodu parametre ile devre dışı bırakılır.
+            refreshFilterName = false;
+
+            searchView.setQuery("", false);
+            searchView.clearFocus();
+            searchView.setIconified(true);
+
+            refreshFilterName = true;
+        }
     }
 }

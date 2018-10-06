@@ -1,10 +1,7 @@
 ﻿Kategori kodu;Kategori adı
-1;Cafe Terimi
-2;Çekirdek Çeşidi
-3;Çekirdek Özelliği
-4;Çekirdek Terimi
+1;Cafe Terimleri
+2;Çekirdek Terimleri
 5;Demleme Yöntemleri
-6;Kahve Çeşidi
-7;Kavurma Terimi
-8;Makine Terimi
-9;Tadım Terimi
+6;Kahve/Ürün Çeşitleri
+7;Kavurma Terimleri
+9;Tadım Terimleri

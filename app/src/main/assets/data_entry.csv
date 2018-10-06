@@ -11,7 +11,7 @@ Aftertaste;Ağızda Kalan Tat;9;Bu tat demleme kahvelerin bittikden sonra ağız
 Air Roaster;Havalı Kavurucu;7;Sıcak hava akımını kullanarak kahve çekirdeklerini kavuran bir kavurma makinesi çeşitidir.
 Alajuela;Alajuela;2;Kosta Rica'nın en iyi kahvelerine verilen market ismidir.
 Alkaline;Alkalin;9;Çoğunlukla geri plandaki kuru bir tat hissi olarak tanımlanır. Bu kuru tat pek hoş karşıkanmasada koyu kavrulmuş kahvelerin ve bağzı Endonezya kahvelerinin karakteristik özelliğidir.
-Altura;Yükseklik;3;İspanyolca yükseklik anlamında ki bu terim yüksekde ve dağda yetiştirilen Meksika kahve çekirdekleri için kullanılır.
+Altura;Yükseklik;2;İspanyolca yükseklik anlamında ki bu terim yüksekde ve dağda yetiştirilen Meksika kahve çekirdekleri için kullanılır.
 Americano;Americano;6;Bir americano bir yada iki shot espresso üzerine dökülmüş sıcak sudan oluşur. Bunun için 170 ml. ölçeğinde porselen fincanlara, yaklaşık 130 ml. kadar sıcak su eklenir. Üstüne bir doz espresso ilave edilir. Americano, filtre kahvenin bir alternatifi olup, çok daha farklı bir kahve demleme yöntemidir.
 Ankola;Ankola;2;Arabica kalitesindeki kuzey Sumatra çekirdekleri için nadire kullanılan bir market ismidir.
 Antestia;Antestia;7;Portekizce asıllı olan bu kelime kahve çekirdeği kavrulurken olan kahveyi buruş buruş ve baştan aşağı siyah bir hale çeviren ifadeyi tanımlayan bir terimdir.
@@ -26,19 +26,19 @@ Baggy;Çuval Tadı;9;Bu tat çuvalın içinde uzun süre bekleyen kahvelerin kar
 Baked;Pişmiş ;9;Düz, donuk, ve ilgi çekmeyen kahve tadıdır.Davul kavurucularda yavaş kavrulmuş kahvelerde görülür. Tadı tatdaki kahvelerden yanık tadı da alınabilir.
 Balance;Dengeli;9;Tek bir karakteristik tadla boğulmayan, ilginç kılıcak değişik tadları dengeli bir şekilde sergileyen tatdır.
 Bani;Bani;2;Bani Dominik Cumhuriyeti'nin Siera bölgesinde yetişen kahvedir. Bu kahvenin market ismi City of Bani'dir.
-Bar;Bar;8;Espresso makineleri 9-10 bar'lık bir sıcak hava basıncını kahveye uygulayarak çalışır. Bar bir basınç birimidir ve bir bar 145 PSI dir.
+Bar;Bar;1;Espresso makineleri 9-10 bar'lık bir sıcak hava basıncını kahveye uygulayarak çalışır. Bar bir basınç birimidir ve bir bar 145 PSI dir.
 Barahona;Barahona;2;Dominik Cumriyeti'nin kuzeyininde bulunan kahvelerin market ismidir. Dominik Cumhuriyeti'nin en iyi kahvesidir.
 Barista;Barista;1;İtalyanca kökenli bu kelime aslında içecek hazırlayan kişi anlamına gelse de ikinci dalga kahvecilerin çıkmasından itibaren tüm dinyada profesyonel şekilde kahve hazırlayan kişilere verilen bir isim halini almıştır.
 Bitter;Acı;9;Acılık tadı arka planda gelen bir tatdır ve koyu kavrulmuş kahvelerin neredeyse tamamında bulunur.
-Bits;Parçalanmış;4;İşlem sırasında parçalanmış kahve çekirdeklerine verilen isimdir.
-Black Bean;Siyah Çekirdek;4;Kavrulmamış halde iken bile siyah renkde olan çekirdeklerdir. Bu çekirdekler olgunlasmamış veya çürümüş kahve kirazlarında bulunur.
-Blend;Harman;4;İki veya daha fazla kahve çekirdeğinin harmanlanarak kullanılmasıdır. bu çekirdekler kavrulmadan önce karıştırılabiliceği gibi kavurmadan sonrada karıştırılabilir. bu işlem kahveye daha dengeli bir tat sunmaya yönelik asitide , gövde arttırmaya ya da azalmaya yarar.
-Blotchy;Lekeli ;4;Düzensiz yeşilimsi, sarımsı veya beyazımsı renkler içeren kavrulmamış kahvedir. Bu çekirdekler tamamlanmamış ya da yanlış uygulanmış kurutma prosesleri yüzünden olabilir.
+Bits;Parçalanmış;2;İşlem sırasında parçalanmış kahve çekirdeklerine verilen isimdir.
+Black Bean;Siyah Çekirdek;2;Kavrulmamış halde iken bile siyah renkde olan çekirdeklerdir. Bu çekirdekler olgunlasmamış veya çürümüş kahve kirazlarında bulunur.
+Blend;Harman;2;İki veya daha fazla kahve çekirdeğinin harmanlanarak kullanılmasıdır. bu çekirdekler kavrulmadan önce karıştırılabiliceği gibi kavurmadan sonrada karıştırılabilir. bu işlem kahveye daha dengeli bir tat sunmaya yönelik asitide , gövde arttırmaya ya da azalmaya yarar.
+Blotchy;Lekeli ;2;Düzensiz yeşilimsi, sarımsı veya beyazımsı renkler içeren kavrulmamış kahvedir. Bu çekirdekler tamamlanmamış ya da yanlış uygulanmış kurutma prosesleri yüzünden olabilir.
 Blue Mountain;Blue Mountain;2;Blue Mountain dünyanın en tartışmalı çekirdeğidir. Jamaikanın en iyi kahvesi olan bu çekirdek iyi bir asitide ve karakteristik bir fındıksı tada sahiptir.
-Boat Shaped;Tekne Şekilli Çekirdek;4;Bu çekirdekler yukarı doğru eğimleriyle bir tekneye benzedikleri için bu ismi almışlardır.
+Boat Shaped;Tekne Şekilli Çekirdek;2;Bu çekirdekler yukarı doğru eğimleriyle bir tekneye benzedikleri için bu ismi almışlardır.
 Affogato;Affogato;6;"
 Latte bardağında bir ölçü vanilyalı dondurma dökülmüş espresso kahvedir."
-Yıllanmış Kahve;Yıllanmış Kahve;4;Ebadını büyütmek ve asiditesini azaltmak için kahvenin uzun yıllar depoda bekletilmesidir. Yaşlanmış kahve eski mahsulden veya olgun kahveden daha uzun süre dayanır.
+Aged Coffee;Yıllanmış Kahve;2;Ebadını büyütmek ve asiditesini azaltmak için kahvenin uzun yıllar depoda bekletilmesidir. Yaşlanmış kahve eski mahsulden veya olgun kahveden daha uzun süre dayanır.
 Bourbon Santos;Bourbon Santos;2;Aynı zamanda Santos olarak da bilinir. Piyasada ismi yüksek kaliteli kahve olarak bilinir. Genellikle Santo limanında gemilerle ihraç edilir. Genellikle São Paulo eyaletinde yetiştirilir ya da Minas Gerais eyaletinin güney bölgesinde yetiştirilir. Bourbon Santos terimi zaman zaman herhangi bir yüksek kaliteli Santos kahvesini temsil etmek için kullanılır, fakat tam anlamıyla arabika’nın Bourbon çeşidinden gelen Santos kahvesini tanımlar. Bu kahve, Brezilya’da yetiştirilen diğer kahvelere nazaran daha asitli daha tatlı bir kahve üretimi için idealdir.
 Buttery;Yağlı;9;Tam, lezzetli ve yağlı bir taddır
 Briny;Tuzlu;9;Çok kavrulmuş kahve ile özleşleşmiş tuzlu bir taddır.
