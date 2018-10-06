@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "coffee_dictionary_db";
     private Context context;
 

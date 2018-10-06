@@ -238,12 +238,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initAds()
     {
-        MobileAds.initialize(this, AppHelper.getProperty(this, "ADMOB_ID"));
-
         adView = (AdView) findViewById(R.id.ad_view);
 
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                //.addTestDevice("FDA3E6132CC71524BCE0F7BFA8A013FA") // asus
                 .build();
 
         adView.loadAd(adRequest);
