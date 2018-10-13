@@ -49,7 +49,7 @@ public class EntryDetailActivity extends AppCompatActivity {
         entry = (Entry)intent.getSerializableExtra("entryModel");
 
         nameEngView.setText(entry.getNameEng());
-        nameTurView.setText(entry.getNameTur());
+        nameTurView.setText(entry.getNameEng().equals(entry.getNameTur()) ? "..." : entry.getNameTur());
         catView.setText(db.getCategory(entry.getCategoryId()).getName());
         descView.setText(entry.getDescription());
 
