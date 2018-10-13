@@ -32,7 +32,7 @@ public class AboutActivity extends AppCompatActivity {
                 .addItem(new Element().setTitle("İçerik ve Tasarım: Uğur Yazıcı"))
                 .addItem(new Element().setTitle("Version: " + BuildConfig.VERSION_NAME))
                 .addGroup("İletişime geç")
-                .addEmail("guvensahin@outlook.com", "Email")
+                .addEmail("kahvesozlugudestek@gmail.com", "Email")
                 .addWebsite("http://guvensahin.com")
                 .addPlayStore("com.guvensahin.coffeedictionary")
                 .addGitHub("guvensahin")
