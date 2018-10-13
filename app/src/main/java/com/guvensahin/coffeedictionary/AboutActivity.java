@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import com.guvensahin.coffeedictionary.BuildConfig;
 
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
@@ -29,7 +30,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setDescription("Kahve Sözlüğü")
                 .addItem(new Element().setTitle("Geliştirme ve Tasarım: Güven Şahin"))
                 .addItem(new Element().setTitle("İçerik ve Tasarım: Uğur Yazıcı"))
-                .addItem(new Element().setTitle("Version: 1.0"))
+                .addItem(new Element().setTitle("Version: " + BuildConfig.VERSION_NAME))
                 .addGroup("İletişime geç")
                 .addEmail("guvensahin@outlook.com", "Email")
                 .addWebsite("http://guvensahin.com")
