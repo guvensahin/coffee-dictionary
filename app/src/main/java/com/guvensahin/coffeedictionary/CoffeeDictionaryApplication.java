@@ -9,6 +9,6 @@ public class CoffeeDictionaryApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        MobileAds.initialize(getApplicationContext(), AppHelper.getProperty(this, "ADMOB_ID"));
+        MobileAds.initialize(getApplicationContext(), AppUtil.getProperty(this, "ADMOB_ID"));
     }
 }

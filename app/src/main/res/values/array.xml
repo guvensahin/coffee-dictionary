@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="searchOnLabels">
+        <item>@string/search_google</item>
+        <item>@string/search_youtube</item>
+        <item>@string/search_eksisozluk</item>
+    </string-array>
+
+    <string-array name="searchOnUrls">
+        <item>https://www.google.com/search?q=%SEARCHTEXT%</item>
+        <item>https://www.youtube.com/results?search_query=%SEARCHTEXT%</item>
+        <item>https://eksisozluk.com/?q=%SEARCHTEXT%</item>
+    </string-array>
+
+</resources>

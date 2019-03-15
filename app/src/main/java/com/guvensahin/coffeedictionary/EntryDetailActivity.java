@@ -1,5 +1,6 @@
 package com.guvensahin.coffeedictionary;
 
+import android.content.Context;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBar;
@@ -8,6 +9,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -49,9 +53,12 @@ public class EntryDetailActivity extends AppCompatActivity {
         entry = (Entry)intent.getSerializableExtra("entryModel");
 
         nameEngView.setText(entry.getNameEng());
-        nameTurView.setText(entry.getNameEng().equals(entry.getNameTur()) ? "..." : entry.getNameTur());
+        nameTurView.setText(entry.getNameEng().equals(entry.getNameTur()) ? "─" : entry.getNameTur());
         catView.setText(db.getCategory(entry.getCategoryId()).getName());
         descView.setText(entry.getDescription());
+
+        // init search on list
+        this.initListView();
 
         // ads
         initAds();
@@ -97,5 +104,22 @@ public class EntryDetailActivity extends AppCompatActivity {
                 .build();
 
         adView.loadAd(adRequest);
+    }
+
+    private void initListView()
+    {
+        ListView listView = (ListView) findViewById(R.id.list_view);
+        final Context context = this;
+        final String searchQuery = this.entry.getNameEng();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.list_item_search_on, android.R.id.text1, getResources().getStringArray(R.array.searchOnLabels));
+
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                AppUtil.clickSearchOn(context, searchQuery, pos);
+            }
+        });
     }
 }

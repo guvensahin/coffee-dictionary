@@ -3,8 +3,14 @@
     <string name="title_activity_about">Hakkında</string>
     <string name="menu_search_view_title">Ara</string>
 
+    <!-- nav -->
     <string name="nav_home">Sözlük</string>
-    <string name="nav_subtitle_cat_title">Kategoriler</string>
+    <string name="nav_subtitle_cat">Kategoriler</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- array -->
+    <string name="search_google">Ara Google</string>
+    <string name="search_youtube">Ara Youtube</string>
+    <string name="search_eksisozluk">Ara Ekşi Sözlük</string>
 </resources>

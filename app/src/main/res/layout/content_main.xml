@@ -13,7 +13,7 @@
         android:id="@+id/list_view_entry"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:divider="#ddd"
+        android:divider="@color/colorListDividerBg"
         android:dividerHeight="1dp"
         android:layout_marginBottom="55dp"
         />

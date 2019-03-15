@@ -1,16 +1,18 @@
 package com.guvensahin.coffeedictionary;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class AppHelper {
-    private static final String TAG = "AppHelper";
+public class AppUtil {
+    private static final String TAG = AppUtil.class.getName();
 
     private static Properties getProperties(Context context) {
         try {
@@ -30,6 +32,19 @@ public class AppHelper {
 
     public static String getProperty(Context context, String key)
     {
-        return AppHelper.getProperties(context).getProperty(key);
+        return AppUtil.getProperties(context).getProperty(key);
+    }
+
+    public static void clickSearchOn(Context context, String gameName, int pos)
+    {
+        String[] searchOnUrls = context.getResources().getStringArray(R.array.searchOnUrls);
+        String url = searchOnUrls[pos];
+
+        url = url.replace("%SEARCHTEXT%", gameName);
+
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        context.startActivity(i);
     }
 }
