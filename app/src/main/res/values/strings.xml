@@ -2,6 +2,7 @@
     <string name="app_name">Kahve Sözlüğü</string>
     <string name="title_activity_about">Hakkında</string>
     <string name="menu_search_view_title">Ara</string>
+    <string name="privacy_policy">Gizlilik Sözleşmesi</string>
 
     <!-- nav -->
     <string name="nav_home">Sözlük</string>
