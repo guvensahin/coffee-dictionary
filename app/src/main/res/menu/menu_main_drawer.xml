@@ -7,16 +7,16 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_home"
-            android:title="@string/nav_home" />
+            android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_menu_about"
-            android:title="@string/title_activity_about"
+            android:title="@string/all_about"
             android:checkable="false"/>
 
         <item
             android:id="@+id/nav_subtitle_cat"
-            android:title="@string/nav_subtitle_cat">
+            android:title="@string/menu_category">
             <menu>
             </menu>
         </item>

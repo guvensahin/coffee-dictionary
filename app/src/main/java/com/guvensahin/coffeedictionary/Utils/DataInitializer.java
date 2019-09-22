@@ -1,11 +1,9 @@
-package com.guvensahin.coffeedictionary;
+package com.guvensahin.coffeedictionary.Utils;
 
-import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
 
+import com.guvensahin.coffeedictionary.Utils.DatabaseHelper;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;

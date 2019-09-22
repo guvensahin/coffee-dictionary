@@ -1,11 +1,15 @@
-package com.guvensahin.coffeedictionary;
+package com.guvensahin.coffeedictionary.Utils;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
+
+import com.guvensahin.coffeedictionary.Models.Category;
+import com.guvensahin.coffeedictionary.Models.Entry;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -250,6 +254,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<Entry> getEntries(Integer categoryId, String name) {
         ArrayList<Entry> list = new ArrayList<Entry>();
+        ArrayList<String> params = new ArrayList<String>();
 
         // query
         String selectQuery = "SELECT  * FROM " + Entry.TABLE_NAME;
@@ -257,13 +262,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         boolean firstCondition = true;
 
-        if (categoryId != null) {
+        if (categoryId != null)
+        {
             firstCondition = false;
-
-            selectQuery += " WHERE (" + Entry.COLUMN_CATEGORYID + " = " + categoryId.toString() + ")";
+            selectQuery += " WHERE (" + Entry.COLUMN_CATEGORYID + " = ?)";
+            params.add(categoryId.toString());
         }
 
-        if (!TextUtils.isEmpty(name)) {
+        if (!TextUtils.isEmpty(name))
+        {
             if (firstCondition)
             {
                 selectQuery += " WHERE";
@@ -273,15 +280,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 selectQuery += " AND";
             }
 
-            selectQuery += " (" + Entry.COLUMN_NAMEENG + " LIKE '%" + name + "%' OR "
-                    + Entry.COLUMN_NAMETUR + " LIKE '%" + name + "%')";
+            selectQuery += " ("
+                        + Entry.COLUMN_NAMEENG + " LIKE ? OR "
+                        + Entry.COLUMN_NAMETUR + " LIKE ?)";
+
+            name = "%" + name + "%";
+            params.add(name);
+            params.add(name);
         }
 
         // order by
         selectQuery += " ORDER BY " + Entry.COLUMN_NAMEENG + " ASC";
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, params.toArray(new String[0]));
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst())

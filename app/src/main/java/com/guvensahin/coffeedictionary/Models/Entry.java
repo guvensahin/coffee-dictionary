@@ -1,4 +1,4 @@
-package com.guvensahin.coffeedictionary;
+package com.guvensahin.coffeedictionary.Models;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.guvensahin.coffeedictionary;
+package com.guvensahin.coffeedictionary.Models;
 
 public class Category {
     public static final String TABLE_NAME = "Category";

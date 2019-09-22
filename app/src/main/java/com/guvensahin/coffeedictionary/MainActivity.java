@@ -22,8 +22,13 @@ import android.widget.ListView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.guvensahin.coffeedictionary.Adapters.EntryAdapter;
+import com.guvensahin.coffeedictionary.Models.Category;
+import com.guvensahin.coffeedictionary.Utils.DatabaseHelper;
 
 import java.util.ArrayList;
+
+import com.guvensahin.coffeedictionary.Models.Entry;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -220,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         for (Category category : categories)
         {
             menuItem = subMenu.add(Menu.NONE, category.getId(), Menu.NONE, category.getName());
-            menuItem.setIcon(R.drawable.ic_nav_cat);
+            menuItem.setIcon(R.drawable.ic_menu_category);
             menuItem.setCheckable(true);
         }
     }
@@ -230,8 +235,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         entries = db.getEntries();
 
-        lv = (ListView) findViewById(R.id.list_view_entry);
-        adapter = new EntryAdapter(this, R.layout.list_view_entry, entries);
+        lv = (ListView) findViewById(R.id.list_entry);
+        adapter = new EntryAdapter(this, R.layout.list_item_entry, entries);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                       @Override

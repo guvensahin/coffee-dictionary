@@ -14,12 +14,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.guvensahin.coffeedictionary.Utils.AppUtil;
+import com.guvensahin.coffeedictionary.Utils.DatabaseHelper;
+
+import com.guvensahin.coffeedictionary.Models.Entry;
 
 public class EntryDetailActivity extends AppCompatActivity {
 
     public Entry entry;
-    private DatabaseHelper db;
-
     private AdView adView;
 
 
@@ -43,7 +45,7 @@ public class EntryDetailActivity extends AppCompatActivity {
         TextView descView = (TextView) findViewById(R.id.desc_view);
 
         // db init
-        db = new DatabaseHelper(this);
+        DatabaseHelper db = new DatabaseHelper(this);
 
         // intent
         Intent intent = getIntent();
@@ -97,7 +99,6 @@ public class EntryDetailActivity extends AppCompatActivity {
 
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                //.addTestDevice("FDA3E6132CC71524BCE0F7BFA8A013FA") // asus
                 .build();
 
         adView.loadAd(adRequest);
@@ -107,7 +108,6 @@ public class EntryDetailActivity extends AppCompatActivity {
     {
         ListView listView = (ListView) findViewById(R.id.list_view);
         final Context context = this;
-        final String searchQuery = this.entry.getNameEng();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.list_item_search_on, android.R.id.text1, getResources().getStringArray(R.array.searchOnLabels));
@@ -115,7 +115,7 @@ public class EntryDetailActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                AppUtil.clickSearchOn(context, searchQuery, pos);
+                AppUtil.clickSearchOn(context, entry, pos);
             }
         });
     }

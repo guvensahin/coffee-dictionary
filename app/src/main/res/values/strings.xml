@@ -1,16 +1,29 @@
 <resources>
     <string name="app_name">Kahve Sözlüğü</string>
-    <string name="title_activity_about">Hakkında</string>
-    <string name="menu_search_view_title">Ara</string>
-    <string name="privacy_policy">Gizlilik Sözleşmesi</string>
+
+
+    <!-- all -->
+    <string name="all_about">Hakkında</string>
+
 
     <!-- nav -->
-    <string name="nav_home">Sözlük</string>
-    <string name="nav_subtitle_cat">Kategoriler</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="menu_home">Sözlük</string>
+    <string name="menu_category">Kategoriler</string>
+    <string name="menu_search">Ara</string>
 
-    <!-- array -->
+
+    <!-- about -->
+    <string name="about_contact">İletişim</string>
+    <string name="about_developed_by">Geliştirme ve Tasarım: Güven Şahin</string>
+    <string name="about_developed_by2">İçerik ve Tasarım: Uğur Yazıcı</string>
+    <string name="about_version">Version</string>
+    <string name="about_email">Email</string>
+    <string name="about_privacy">Gizlilik Sözleşmesi</string>
+
+
+    <!-- search -->
     <string name="search_google">Ara Google</string>
     <string name="search_youtube">Ara Youtube</string>
     <string name="search_eksisozluk">Ara Ekşi Sözlük</string>

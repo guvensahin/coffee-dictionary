@@ -1,15 +1,16 @@
-package com.guvensahin.coffeedictionary;
+package com.guvensahin.coffeedictionary.Adapters;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.guvensahin.coffeedictionary.Models.Entry;
+import com.guvensahin.coffeedictionary.R;
+
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class EntryAdapter extends ArrayAdapter<Entry> {
     private ArrayList<Entry> items;

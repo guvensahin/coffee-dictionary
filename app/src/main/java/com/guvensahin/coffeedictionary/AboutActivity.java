@@ -15,24 +15,23 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // title
-        setTitle(R.string.title_activity_about);
+        setTitle(R.string.all_about);
 
         // back button
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_clear_white);
 
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
-                .setImage(R.drawable.img_about)
+                .setImage(R.drawable.about_header)
                 .setDescription(getString(R.string.app_name))
-                .addItem(new Element().setTitle("Geliştirme ve Tasarım: Güven Şahin"))
-                .addItem(new Element().setTitle("İçerik ve Tasarım: Uğur Yazıcı"))
-                .addItem(new Element().setTitle("Version: " + BuildConfig.VERSION_NAME))
-                .addWebsite("http://guvensahin.com/privacy/coffeedictionary_privacy.html", getString(R.string.privacy_policy))
-                .addGroup("İletişime geç")
-                .addEmail("kahvesozlugudestek@gmail.com", "Email")
+                .addItem(new Element().setTitle(getString(R.string.about_developed_by)))
+                .addItem(new Element().setTitle(getString(R.string.about_developed_by2)))
+                .addItem(new Element().setTitle(getString(R.string.about_version) + " " + BuildConfig.VERSION_NAME))
+                .addWebsite("http://guvensahin.com/privacy/coffeedictionary_privacy.html", getString(R.string.about_privacy))
+                .addGroup(getString(R.string.about_contact))
+                .addEmail("kahvesozlugudestek@gmail.com", getString(R.string.about_email))
                 .addWebsite("http://guvensahin.com")
                 .addPlayStore(this.getPackageName())
                 .addGitHub("guvensahin")

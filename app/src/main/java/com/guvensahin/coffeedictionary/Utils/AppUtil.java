@@ -1,4 +1,4 @@
-package com.guvensahin.coffeedictionary;
+package com.guvensahin.coffeedictionary.Utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.util.Log;
+
+import com.guvensahin.coffeedictionary.Models.Entry;
+import com.guvensahin.coffeedictionary.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,12 +38,12 @@ public class AppUtil {
         return AppUtil.getProperties(context).getProperty(key);
     }
 
-    public static void clickSearchOn(Context context, String gameName, int pos)
+    public static void clickSearchOn(Context context, Entry entry, int pos)
     {
         String[] searchOnUrls = context.getResources().getStringArray(R.array.searchOnUrls);
         String url = searchOnUrls[pos];
 
-        url = url.replace("%SEARCHTEXT%", gameName);
+        url = url.replace("%SEARCHTEXT%", entry.getName());
 
 
         Intent i = new Intent(Intent.ACTION_VIEW);
