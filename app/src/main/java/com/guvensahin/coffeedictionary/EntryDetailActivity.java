@@ -99,6 +99,7 @@ public class EntryDetailActivity extends AppCompatActivity {
 
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("FDA3E6132CC71524BCE0F7BFA8A013FA") // asus
                 .build();
 
         adView.loadAd(adRequest);
