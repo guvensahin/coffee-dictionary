@@ -16,11 +16,11 @@
 
     <!-- about -->
     <string name="about_contact">İletişim</string>
-    <string name="about_developed_by">Geliştirme ve Tasarım: Güven Şahin</string>
-    <string name="about_developed_by2">İçerik ve Tasarım: Uğur Yazıcı</string>
-    <string name="about_version">Version</string>
+    <string name="about_developed_by">Geliştiren: Güven Şahin</string>
+    <string name="about_developed_by2">İçerik: Uğur Yazıcı</string>
+    <string name="about_version">Sürüm</string>
     <string name="about_email">Email</string>
-    <string name="about_privacy">Gizlilik Sözleşmesi</string>
+    <string name="about_privacy">Gizlilik Politikası</string>
 
 
     <!-- search -->
