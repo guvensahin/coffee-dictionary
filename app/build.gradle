@@ -1,15 +1,22 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
 
 android {
-    compileSdkVersion 34
+    namespace 'com.guvensahin.coffeedictionary'
+    compileSdk 35
+
     defaultConfig {
         applicationId "com.guvensahin.coffeedictionary"
-        minSdkVersion 21
-        targetSdkVersion 34
-        versionCode 21
-        versionName "1.2.7"
+        minSdk 21
+        targetSdk 35
+        versionCode 22
+        versionName "1.2.8"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         debug {
             resValue "string", "ADMOB_BANNER_ID", getProps("ADMOB_BANNER_ID")
@@ -22,7 +29,11 @@ android {
             resValue "string", "ADMOB_BANNER_ID", getProps("ADMOB_BANNER_ID")
         }
     }
-    namespace 'com.guvensahin.coffeedictionary'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 }
 
 dependencies {
@@ -42,17 +53,13 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.8'
 }
 
-
-
 def getProps(String propName) {
-    def propsFile = rootProject.file('\\app\\src\\main\\assets\\config.properties')
+    def propsFile = rootProject.file('app/src/main/assets/config.properties')
     if (propsFile.exists()) {
         def props = new Properties()
-        props.load(new FileInputStream(propsFile))
-        return props[propName]
+        propsFile.withInputStream { props.load(it) }
+        return props[propName] ?: ""
     } else {
-        return "";
+        return ""
     }
 }
-
-apply plugin: 'com.google.gms.google-services'

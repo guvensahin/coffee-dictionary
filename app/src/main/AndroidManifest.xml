@@ -21,8 +21,12 @@
             android:value="ca-app-pub-2453073529147932~1596896471" />
 
 
-        <activity android:name=".EntryDetailActivity" />
-        <activity android:name=".AboutActivity" />
+        <activity
+            android:name=".EntryDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AboutActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"

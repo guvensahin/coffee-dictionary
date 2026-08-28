@@ -2,8 +2,10 @@ package com.guvensahin.coffeedictionary;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
@@ -13,14 +15,21 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_about);
+
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // title
         setTitle(R.string.all_about);
 
         // back button
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
 
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
@@ -37,8 +46,9 @@ public class AboutActivity extends AppCompatActivity {
                 .addGitHub("guvensahin")
                 .create();
 
-        setContentView(aboutPage);
-}
+        FrameLayout container = (FrameLayout) findViewById(R.id.about_container);
+        container.addView(aboutPage);
+    }
 
 
     @Override
